@@ -1650,17 +1650,19 @@ onChange={(e) => setIncomeCategory(e.target.value)}
         />
 
         <button
-       onClick={async () => {
+onClick={async () => {
 
   const token = localStorage.getItem("token");
 
-const cleanId = editingExpense.id;
+  const cleanId = editingExpense.id;
 
-console.log(editingExpense);
-console.log(cleanId);
+  const endpoint =
+    editingExpense.type === "income"
+      ? `https://expense-tracker-backend-z7i5.onrender.com/income/${cleanId}`
+      : `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`;
 
   await axios.put(
-    `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
+    endpoint,
     {
       title: editingExpense.title,
       amount: Number(
@@ -1675,7 +1677,8 @@ console.log(cleanId);
     }
   );
 
-  fetchExpenses();
+  await fetchExpenses();
+  await fetchIncome();
 
   setShowEditModal(false);
 
@@ -1695,13 +1698,16 @@ console.log(cleanId);
 onClick={async () => {
 
   const token = localStorage.getItem("token");
-const cleanId = editingExpense.id;
 
-console.log(editingExpense);
-console.log(cleanId);
+  const cleanId = editingExpense.id;
+
+  const endpoint =
+    editingExpense.type === "income"
+      ? `https://expense-tracker-backend-z7i5.onrender.com/income/${cleanId}`
+      : `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`;
 
   await axios.delete(
-    `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
+    endpoint,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -1709,7 +1715,8 @@ console.log(cleanId);
     }
   );
 
-  fetchExpenses();
+  await fetchExpenses();
+  await fetchIncome();
 
   setShowEditModal(false);
 
