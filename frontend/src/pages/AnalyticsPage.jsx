@@ -94,7 +94,7 @@ function AnalyticsPage() {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "http://127.0.0.1:8000/income",
+      "https://expense-tracker-backend-z7i5.onrender.com/income",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -103,6 +103,8 @@ function AnalyticsPage() {
     );
 
     setIncome(response.data);
+
+    console.log("INCOME DATA:", response.data);
 
   } catch (error) {
 
