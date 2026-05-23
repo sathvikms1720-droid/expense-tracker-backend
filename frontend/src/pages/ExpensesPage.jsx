@@ -346,7 +346,7 @@ const fetchExpenses = async () => {
   )
   .map((item) => ({
 
-      id: `expense-${item.id}`,
+      id: item.id,
      createdAt: item.created_at,
 
       title: item.title,
@@ -447,7 +447,7 @@ const fetchIncome = async () => {
   )
   .map((item, index) => ({
 
-      id: `income-${index}`,
+     id: item.id,
 createdAt: item.created_at,
       title: item.title,
 
@@ -1654,7 +1654,10 @@ onChange={(e) => setIncomeCategory(e.target.value)}
 
   const token = localStorage.getItem("token");
 
-  const cleanId = editingExpense.id.split("-")[1];
+const cleanId = editingExpense.id;
+
+console.log(editingExpense);
+console.log(cleanId);
 
   await axios.put(
     `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
@@ -1692,8 +1695,10 @@ onChange={(e) => setIncomeCategory(e.target.value)}
 onClick={async () => {
 
   const token = localStorage.getItem("token");
+const cleanId = editingExpense.id;
 
-  const cleanId = editingExpense.id.split("-")[1];
+console.log(editingExpense);
+console.log(cleanId);
 
   await axios.delete(
     `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
