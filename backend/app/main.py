@@ -26,9 +26,10 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
-        "https://expense-tracker-backend-sandy.vercel.app"
-    ],
+    "http://localhost:5173",
+    "https://expense-tracker-backend-sandy.vercel.app",
+    "https://expense-tracker-backend-git-main-sathvikms1720-droids-projects.vercel.app"
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
