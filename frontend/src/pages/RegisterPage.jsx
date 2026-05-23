@@ -116,7 +116,7 @@ const handleGoogleLogin = (response) => {
   }
 
   try {
-    const response = await API.post("/users/register", {
+    const response = await API.post("register", {
       username: form.name,
       email: form.email,
       password: form.password,
@@ -334,8 +334,7 @@ callback: async (response) => {
     const user = await userInfo.json();
 
     const res = await API.post(
-      "/google-login",
-      {
+      "/google-login",{
         name: user.name,
         email: user.email,
       }
