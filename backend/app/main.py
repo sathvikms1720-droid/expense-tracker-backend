@@ -25,16 +25,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-    "http://localhost:5173",
-    "https://expense-tracker-backend-sandy.vercel.app",
-    "https://expense-tracker-backend-git-main-sathvikms1720-droids-projects.vercel.app"
-],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(expenses.router)
 app.include_router(income.router)
 app.include_router(users.router)

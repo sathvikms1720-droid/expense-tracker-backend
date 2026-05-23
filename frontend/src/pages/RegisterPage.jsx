@@ -116,7 +116,7 @@ const handleGoogleLogin = (response) => {
   }
 
   try {
-    const response = await API.post("/register", {
+    const response = await API.post("/users/register", {
       username: form.name,
       email: form.email,
       password: form.password,
