@@ -85,3 +85,59 @@ def get_income(
     ).all()
 
     return income
+@router.put("/income/{income_id}")
+def update_income(
+    income_id: int,
+    updated_income: ExpenseCreate,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+
+    user = db.query(models.User).filter(
+        models.User.email == current_user["sub"]
+    ).first()
+
+    income = db.query(models.Income).filter(
+        models.Income.id == income_id,
+        models.Income.user_id == user.id
+    ).first()
+
+    if income is None:
+        return {"error": "Income not found"}
+
+    income.title = updated_income.title
+    income.amount = updated_income.amount
+    income.category = updated_income.category
+
+    db.commit()
+
+    return {
+        "message": "Income updated successfully"
+    }
+
+
+@router.delete("/income/{income_id}")
+def delete_income(
+    income_id: int,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+
+    user = db.query(models.User).filter(
+        models.User.email == current_user["sub"]
+    ).first()
+
+    income = db.query(models.Income).filter(
+        models.Income.id == income_id,
+        models.Income.user_id == user.id
+    ).first()
+
+    if income is None:
+        return {"error": "Income not found"}
+
+    db.delete(income)
+    db.commit()
+
+    return {
+        "message": "Income deleted successfully"
+    }
