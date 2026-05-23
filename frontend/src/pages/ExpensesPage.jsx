@@ -331,7 +331,7 @@ const fetchExpenses = async () => {
     const token = localStorage.getItem("token")
 
     const response = await axios.get(
-      "http://127.0.0.1:8000/expenses",
+      "https://expense-tracker-backend-z7i5.onrender.com/expenses",
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -432,7 +432,7 @@ const fetchIncome = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "http://127.0.0.1:8000/income",
+      "https://expense-tracker-backend-z7i5.onrender.com/income",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -517,7 +517,7 @@ const handleSaveIncome = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/income",
+      "https://expense-tracker-backend-z7i5.onrender.com/income",
       {
         title: incomeTitle,
 amount: Number(incomeAmount),
@@ -572,7 +572,7 @@ const handleSaveExpense = async () => {
     console.log("TOKEN:", token);
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/expenses",
+      "https://expense-tracker-backend-z7i5.onrender.com/expenses",
       {
         title: expenseTitle,
 amount: Number(expenseAmount),
@@ -1657,7 +1657,7 @@ onChange={(e) => setIncomeCategory(e.target.value)}
   const cleanId = editingExpense.id.split("-")[1];
 
   await axios.put(
-    `http://127.0.0.1:8000/expenses/${cleanId}`,
+    `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
     {
       title: editingExpense.title,
       amount: Number(
@@ -1696,7 +1696,7 @@ onClick={async () => {
   const cleanId = editingExpense.id.split("-")[1];
 
   await axios.delete(
-    `http://127.0.0.1:8000/expenses/${cleanId}`,
+    `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

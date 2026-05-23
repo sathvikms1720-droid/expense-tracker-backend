@@ -240,7 +240,7 @@ const fetchExpenses = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "http://127.0.0.1:8000/expenses",
+      "https://expense-tracker-backend-z7i5.onrender.com/expenses",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -266,7 +266,7 @@ const fetchIncomes = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "http://127.0.0.1:8000/income",
+      "https://expense-tracker-backend-z7i5.onrender.com/income",
       {
         headers: {
           Authorization: `Bearer ${token}`,
