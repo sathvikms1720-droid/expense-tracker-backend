@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
@@ -57,14 +57,7 @@ const fetchExpenses = async () => {
 
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-      "http://127.0.0.1:8000/expenses",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.get("/expenses");
 
     setExpenses(response.data);
 
@@ -88,14 +81,7 @@ const fetchIncome = async () => {
 
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-      "http://127.0.0.1:8000/income",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.get("/income");
     
 
     setIncome(response.data);
@@ -124,8 +110,8 @@ const handleSaveExpense = async () => {
 
     const token = localStorage.getItem("token");
 
-await axios.post(
-    "http://127.0.0.1:8000/expenses",
+await API.post(
+    "/expenses",
 
       {
         title: expenseTitle,
@@ -172,8 +158,8 @@ const handleSaveIncome = async () => {
 
     const token = localStorage.getItem("token");
 
-await axios.post(
-    "http://127.0.0.1:8000/income",
+await API.post(
+    "/income",
 
       {
         title: incomeTitle,

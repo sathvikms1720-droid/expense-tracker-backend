@@ -1,5 +1,5 @@
 import React, { useState } from "react";7
-import axios from "axios"
+import API from "../services/api";
 import { useEffect } from "react"
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
@@ -328,16 +328,9 @@ const fetchExpenses = async () => {
 
   try {
 
-    const token = localStorage.getItem("token")
 
-    const response = await axios.get(
-      "http://127.0.0.1:8000/expenses",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
+
+const response = await API.get("/expenses");
 
    const formattedExpenses = response.data
   .sort(
@@ -429,16 +422,8 @@ const fetchIncome = async () => {
 
   try {
 
-    const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-      "http://127.0.0.1:8000/income",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.get("/income");
 
   const formattedIncome = response.data
   .sort(
@@ -514,22 +499,17 @@ const handleSaveIncome = async () => {
 
   try {
 
-    const token = localStorage.getItem("token");
 
-const response = 
-await axios.post(
-  "http://127.0.0.1:8000/income",
+
+const response = await API.post(
+  "/income",
       {
         title: incomeTitle,
 amount: Number(incomeAmount),
 category: incomeCategory,
 
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+     
     );
 
     console.log(response.data);
@@ -568,24 +548,17 @@ const handleSaveExpense = async () => {
 
   try {
 
-    const token = localStorage.getItem("token");
 
-    console.log("TOKEN:", token);
 
-    const response = await axios.post(
-      "http://127.0.0.1:8000/expenses",
-      {
-        title: expenseTitle,
-amount: Number(expenseAmount),
-category: expenseCategory,
 
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.post(
+  "/expenses",
+  {
+    title: expenseTitle,
+    amount: Number(expenseAmount),
+    category: expenseCategory
+  }
+);
 
     console.log(response.data);
 
@@ -1659,16 +1632,16 @@ onChange={(e) => setIncomeCategory(e.target.value)}
         <button
 onClick={async () => {
 
-  const token = localStorage.getItem("token");
+
 
   const cleanId = editingExpense.id;
 
 const endpoint =
-  editingExpense.type === "income"
-    ? `http://127.0.0.1:8000/income/${cleanId}`
-    : `http://127.0.0.1:8000/expenses/${cleanId}`;
+editingExpense.type === "income"
+? `/income/${cleanId}`
+: `/expenses/${cleanId}`;
 
-  await axios.put(
+await API.put(
     endpoint,
     {
       title: editingExpense.title,
@@ -1677,11 +1650,7 @@ const endpoint =
       ),
       category: editingExpense.category,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+
   );
 
   await fetchExpenses();
@@ -1704,22 +1673,16 @@ const endpoint =
         <button
 onClick={async () => {
 
-  const token = localStorage.getItem("token");
 
   const cleanId = editingExpense.id;
 
 const endpoint =
   editingExpense.type === "income"
-    ? `http://127.0.0.1:8000/income/${cleanId}`
-    : `http://127.0.0.1:8000/expenses/${cleanId}`;
-
-  await axios.delete(
+    ? `/income/${cleanId}`
+    : `/expenses/${cleanId}`;
+ await API.delete(
     endpoint,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+
   );
 
   await fetchExpenses();

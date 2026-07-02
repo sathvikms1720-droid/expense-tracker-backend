@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
 
 import { motion } from "framer-motion"
-import axios from "axios"
+import API from "../services/api";
 
 import {
   Wallet,
@@ -69,14 +69,7 @@ function AnalyticsPage() {
 
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-        "http://127.0.0.1:8000/expenses",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+const response = await API.get("/expenses");
 
       setExpenses(response.data);
 
@@ -93,14 +86,7 @@ function AnalyticsPage() {
 
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-       "http://127.0.0.1:8000/income",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.get("/income");
 
     setIncome(response.data);
 

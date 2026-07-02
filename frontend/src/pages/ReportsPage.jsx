@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 import { motion } from "framer-motion"
 import { useRef } from "react";
 import {
@@ -237,16 +237,9 @@ const fetchExpenses = async () => {
 
   try {
 
-    const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-      "http://127.0.0.1:8000/expenses",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+
+const response = await API.get("/expenses");
 
     setExpenses(response.data);
 
@@ -263,16 +256,7 @@ const fetchIncomes = async () => {
 
   try {
 
-    const token = localStorage.getItem("token");
-
-    const response = await axios.get(
-        "http://127.0.0.1:8000/income",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+const response = await API.get("/income");
 
     setIncomes(response.data);
 
