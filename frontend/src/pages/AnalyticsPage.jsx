@@ -70,7 +70,7 @@ function AnalyticsPage() {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "https://expense-tracker-backend-z7i5.onrender.com/expenses",
+        "http://127.0.0.1:8000/expenses",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ function AnalyticsPage() {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "https://expense-tracker-backend-z7i5.onrender.com/income",
+       "http://127.0.0.1:8000/income",
       {
         headers: {
           Authorization: `Bearer ${token}`,

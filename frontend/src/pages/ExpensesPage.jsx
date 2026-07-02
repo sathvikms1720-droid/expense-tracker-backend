@@ -331,7 +331,7 @@ const fetchExpenses = async () => {
     const token = localStorage.getItem("token")
 
     const response = await axios.get(
-      "https://expense-tracker-backend-z7i5.onrender.com/expenses",
+      "http://127.0.0.1:8000/expenses",
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -432,7 +432,7 @@ const fetchIncome = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "https://expense-tracker-backend-z7i5.onrender.com/income",
+      "http://127.0.0.1:8000/income",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -516,8 +516,9 @@ const handleSaveIncome = async () => {
 
     const token = localStorage.getItem("token");
 
-    const response = await axios.post(
-      "https://expense-tracker-backend-z7i5.onrender.com/income",
+const response = 
+await axios.post(
+  "http://127.0.0.1:8000/income",
       {
         title: incomeTitle,
 amount: Number(incomeAmount),
@@ -572,7 +573,7 @@ const handleSaveExpense = async () => {
     console.log("TOKEN:", token);
 
     const response = await axios.post(
-      "https://expense-tracker-backend-z7i5.onrender.com/expenses",
+      "http://127.0.0.1:8000/expenses",
       {
         title: expenseTitle,
 amount: Number(expenseAmount),
@@ -719,25 +720,31 @@ const allTransactions = [...income, ...expenses].sort(
 );
 console.log(allTransactions);
 
-  const filtered = allTransactions.filter((e) => {
+const filtered = allTransactions
+  .filter((e) => {
+    const matchSearch =
+      e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      e.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-  const matchSearch =
-    e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    e.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchCat =
+      selectedCategory === "All Categories"
+        ? true
+        : e.category === selectedCategory;
 
-  const matchCat =
-    selectedCategory === "All Categories"
-      ? true
-      : e.category === selectedCategory;
+    const matchPay =
+      transactionType === "All Transactions"
+        ? true
+        : transactionType === "Income"
+        ? e.type === "income"
+        : e.type === "expense";
 
-const matchPay =
-  transactionType === "All Transactions"
-    ? true
-    : transactionType === "Income"
-    ? e.type === "income"
-    : e.type === "expense";
-  return matchSearch && matchCat && matchPay;
-});
+    return matchSearch && matchCat && matchPay;
+  })
+  .sort(
+    (a, b) =>
+      new Date(b.createdAt).getTime() -
+      new Date(a.createdAt).getTime()
+  );
   const itemsPerPage = 5;
 
 const totalPages = Math.ceil(filtered.length / itemsPerPage);
@@ -1656,10 +1663,10 @@ onClick={async () => {
 
   const cleanId = editingExpense.id;
 
-  const endpoint =
-    editingExpense.type === "income"
-      ? `https://expense-tracker-backend-z7i5.onrender.com/income/${cleanId}`
-      : `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`;
+const endpoint =
+  editingExpense.type === "income"
+    ? `http://127.0.0.1:8000/income/${cleanId}`
+    : `http://127.0.0.1:8000/expenses/${cleanId}`;
 
   await axios.put(
     endpoint,
@@ -1701,10 +1708,10 @@ onClick={async () => {
 
   const cleanId = editingExpense.id;
 
-  const endpoint =
-    editingExpense.type === "income"
-      ? `https://expense-tracker-backend-z7i5.onrender.com/income/${cleanId}`
-      : `https://expense-tracker-backend-z7i5.onrender.com/expenses/${cleanId}`;
+const endpoint =
+  editingExpense.type === "income"
+    ? `http://127.0.0.1:8000/income/${cleanId}`
+    : `http://127.0.0.1:8000/expenses/${cleanId}`;
 
   await axios.delete(
     endpoint,
