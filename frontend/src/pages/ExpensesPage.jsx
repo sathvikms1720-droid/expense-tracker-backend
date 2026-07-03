@@ -686,11 +686,16 @@ const spendingData = daysOrder.map((day) => ({
   week: day,
   amount: weeklyTotals[day] || 0,
 }));
-const allTransactions = [...income, ...expenses].sort(
-  (a, b) =>
-    new Date(b.createdAt).getTime() -
-    new Date(a.createdAt).getTime()
-);
+const allTransactions = [...income, ...expenses]
+  .sort(
+    (a, b) =>
+      new Date(b.createdAt).getTime() -
+      new Date(a.createdAt).getTime()
+  )
+  .map((item, index) => ({
+    ...item,
+    uniqueKey: `${item.type}-${item.id}-${index}`,
+  }));
 console.log(allTransactions);
 
 const filtered = allTransactions
