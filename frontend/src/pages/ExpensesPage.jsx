@@ -332,7 +332,7 @@ const fetchExpenses = async () => {
 
 const response = await API.get("/expenses");
 
-   const formattedExpenses = response.data
+const formattedExpenses = [...response.data]
   .sort(
     (a, b) =>
       new Date(b.created_at) - new Date(a.created_at)
@@ -425,7 +425,7 @@ const fetchIncome = async () => {
 
 const response = await API.get("/income");
 
-  const formattedIncome = response.data
+const formattedIncome = [...response.data]
   .sort(
     (a, b) =>
       new Date(b.created_at) - new Date(a.created_at)
@@ -734,12 +734,13 @@ const currentTransactions = filtered.slice(
   startIndex + itemsPerPage
 );
 const recentActivity = [...income, ...expenses]
-  .sort(
-    (a, b) =>
+  .sort((a, b) => {
+    return (
       new Date(b.createdAt).getTime() -
       new Date(a.createdAt).getTime()
-  )
-  .slice(0, 11000);
+    );
+  })
+  .slice(0, 8);
 
   return (
     <div className="
@@ -992,10 +993,10 @@ const recentActivity = [...income, ...expenses]
 
              {currentTransactions.length > 0 ? (
 currentTransactions.map((expense, i) => (
-   <ExpenseRow
-  key={expense.id}
-  expense={expense}
-  index={i}
+  <ExpenseRow
+    key={expense.uniqueKey}
+    expense={expense}
+    index={i}
   onEdit={(expense) => {
     setEditingExpense(expense);
     setShowEditModal(true);
